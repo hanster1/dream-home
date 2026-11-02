@@ -9,6 +9,7 @@ I used one playbook: **Editorial Luxury Magazine** (the Architectural Digest / K
 
 ## How it works
 - The app is a static site with no build step: `index.html`, `styles.css`, `data.js` and `app.js`.
+- Images are served from jsDelivr (pinned to a commit of this repo) in production and from /img locally.
 - All 57 images were pre-generated, photoreal and converted to WebP, with `-sm` thumbnails:
   - 15 settings (5 categories × 3)
   - 30 exteriors. Each site has 2 architectures rendered into that exact landscape, so each category has all 6.

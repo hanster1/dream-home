@@ -1,4 +1,5 @@
 (() => {
+  const IMG = window.IMG;
   const { CATS, STYLES, LAYOUTS, SIZES, settings, catOf, styleOf, views, price } = window.DH;
   const $ = (s, r = document) => r.querySelector(s);
   const app = $('#app'), drawer = $('#drawer');
@@ -43,7 +44,7 @@
 
   function intro() {
     return `<section class="hero">
-      <img src="/img/ext-malibu-glass.webp" alt="Glass modern home on the Malibu bluffs" class="kb">
+      <img src="${IMG}/ext-malibu-glass.webp" alt="Glass modern home on the Malibu bluffs" class="kb">
       <div class="hero-copy">
         <p class="eyebrow">The Dream Home Issue</p>
         <h1>Where would you <em>live</em>, if you could live anywhere?</h1>
@@ -61,7 +62,7 @@
       <div class="grid g3">${c.settings.map(([id]) => {
         const s = settings[id];
         return `<button class="card ${state.setting === id ? 'sel' : ''}" data-setting="${id}">
-          <img loading="lazy" src="/img/set-${id}.webp" alt="${esc(s.name)}"><div class="cap"><h3>${esc(s.name)}</h3><p class="place">${esc(s.place)}</p><p>${esc(s.blurb)}</p></div></button>`;
+          <img loading="lazy" src="${IMG}/set-${id}.webp" alt="${esc(s.name)}"><div class="cap"><h3>${esc(s.name)}</h3><p class="place">${esc(s.place)}</p><p>${esc(s.blurb)}</p></div></button>`;
       }).join('')}</div>${nav(-1, !!state.setting)}`;
   }
 
@@ -71,7 +72,7 @@
       <div class="grid g3">${STYLES.map(st => {
         const v = views(state.setting, st.id);
         return `<button class="card ${state.style === st.id ? 'sel' : ''}" data-style="${st.id}">
-          <img loading="lazy" src="/img/ext-${v.setting.id}-${st.id}-sm.webp" alt="${esc(st.name)}"><div class="cap"><h3>${st.name}</h3><p>${st.line}</p>${v.exact ? '<p class="place">At your site</p>' : `<p class="place">Shown at ${esc(v.setting.name)}</p>`}</div></button>`;
+          <img loading="lazy" src="${IMG}/ext-${v.setting.id}-${st.id}-sm.webp" alt="${esc(st.name)}"><div class="cap"><h3>${st.name}</h3><p>${st.line}</p>${v.exact ? '<p class="place">At your site</p>' : `<p class="place">Shown at ${esc(v.setting.name)}</p>`}</div></button>`;
       }).join('')}</div>${nav(0, !!state.style)}`;
   }
 
@@ -136,10 +137,10 @@
     drawer.innerHTML = `<div class="drawer-in"><div class="drawer-head"><h2>Saved homes</h2><button class="ghost" data-close aria-label="Close">✕</button></div>
       ${list.length ? `<p class="hint">Tick two homes to compare them side by side.</p>` : '<p class="hint">Homes you save appear here. They stay in this browser.</p>'}
       <ul class="saved">${list.map(d => { const k = dKey(d), v = views(d.setting, d.style); return `<li>
-        <img src="/img/ext-${v.setting.id}-${d.style}-sm.webp" alt="">
+        <img src="${IMG}/ext-${v.setting.id}-${d.style}-sm.webp" alt="">
         <div><h3>${esc(title(d))}</h3><p>${fmt(SIZES.find(z => z.id === d.size).sqft)} sq ft · ${money(price(d))}</p>
         <div class="row"><label><input type="checkbox" data-cmp="${k}" ${state.compare.includes(k) ? 'checked' : ''}> Compare</label><button class="link" data-open="${k}">Open</button><button class="link" data-del="${k}">Remove</button></div></div></li>`; }).join('')}</ul>
-      ${cmp.length === 2 ? `<div class="compare">${cmp.map(d => { const v = views(d.setting, d.style); return `<div><img src="/img/ext-${v.setting.id}-${d.style}.webp" alt=""><h3>${esc(title(d))}</h3>${summary(d, true)}</div>`; }).join('')}</div>` : ''}
+      ${cmp.length === 2 ? `<div class="compare">${cmp.map(d => { const v = views(d.setting, d.style); return `<div><img src="${IMG}/ext-${v.setting.id}-${d.style}.webp" alt=""><h3>${esc(title(d))}</h3>${summary(d, true)}</div>`; }).join('')}</div>` : ''}
     </div>`;
   }
   function openDrawer(on) { drawer.classList.toggle('on', on); drawer.setAttribute('aria-hidden', String(!on)); if (on) renderDrawer(); }

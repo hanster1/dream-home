@@ -1,3 +1,4 @@
+window.IMG = /^(localhost|127\.)/.test(location.hostname) ? '/img' : 'https://cdn.jsdelivr.net/gh/hanster1/dream-home@817ef9699ce340f6728dc146621c389320d7a965/img';
 window.DH = (() => {
   const CATS = [
     { id: 'beach', name: 'Beaches', kicker: 'Salt air & horizon', settings: [
@@ -62,9 +63,9 @@ window.DH = (() => {
   function views(settingId, styleId) {
     const r = render(settingId, styleId);
     const key = `${r.setting.id}-${styleId}`;
-    const v = [{ id: 'ext', label: 'Exterior', src: `/img/ext-${key}.webp` },
-               { id: 'int', label: 'Interior', src: `/img/int-${styleId}.webp` }];
-    if (TWILIGHT.has(key)) v.push({ id: 'twi', label: 'Twilight', src: `/img/twi-${key}.webp` });
+    const v = [{ id: 'ext', label: 'Exterior', src: `${IMG}/ext-${key}.webp` },
+               { id: 'int', label: 'Interior', src: `${IMG}/int-${styleId}.webp` }];
+    if (TWILIGHT.has(key)) v.push({ id: 'twi', label: 'Twilight', src: `${IMG}/twi-${key}.webp` });
     return { ...r, views: v };
   }
   function price(design) {
