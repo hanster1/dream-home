@@ -21,3 +21,15 @@ I used one playbook: **Editorial Luxury Magazine** (the Architectural Digest / K
 
 ## Run locally
 `npx serve .` or `python3 -m http.server`
+
+## 3D Studio (new main experience)
+
+`index.html` is now a real-time Three.js world (vendored r184, no build step):
+
+- Drag to orbit, wheel/pinch to zoom, click the ground to place the home, R or the slider to rotate.
+- 15 fantasy landscapes inspired by real places (beaches, forests, lakes, rivers, cities). Click a thumbnail to teleport.
+- 6 parametric architecture styles × 4 layouts × 4 sizes, plus midday / golden hour / dusk. Everything rebuilds live.
+- Gerstner water, physical sky with clouds, fog, ACES tone mapping, shadows, instanced trees and wind grass. Bloom is used at dusk.
+- Quality toggle (High/Low, auto-Low on phones, `?q=low` forces it).
+- Save, share link and compare still work (`dreamhome.saved.v1`). The old photo mode lives at `/photo.html` ("Photo render").
+- Code: `3d/main.js` (studio UI), `3d/world.js` (terrain/sky/water/plants/cities), `3d/home.js` (parametric homes), `3d/lands.js` (landscape specs). `?thumb=land:ID` renders thumbnail frames.

@@ -3,25 +3,63 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Maison Rêve · Dream Home Designer</title>
-<meta name="description" content="Design your dream home: pick a setting, an architecture, a layout and a size, then see it photographed.">
-<meta property="og:title" content="Maison Rêve · Dream Home Designer">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/hanster1/dream-home@817ef9699ce340f6728dc146621c389320d7a965/img/ext-malibu-glass.webp">
+<title>Maison Rêve · 3D Dream Home Studio</title>
+<meta name="description" content="Walk a living 3D world, teleport between fantasy landscapes, plop down a home and reshape it in real time.">
+<meta property="og:title" content="Maison Rêve · 3D Dream Home Studio">
+<meta property="og:image" content="https://dream-home-spencer-73ef.vercel.app/3d/thumbs/land-malibu.webp">
 <meta name="theme-color" content="#0e0d0b">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/3d/studio.css">
+<script type="importmap">{"imports":{"three":"/vendor/three/build/three.module.js","three/addons/":"/vendor/three/jsm/"}}</script>
 </head>
 <body>
-<header class="top">
-  <a class="brand" href="/" data-home>Maison <em>Rêve</em></a>
-  <nav class="stepper" aria-label="Progress"><ol id="stepper"></ol></nav>
-  <button class="ghost" id="savedBtn" aria-label="Saved homes">Saved <span id="savedCount">0</span></button>
+<canvas id="scene" aria-label="3D landscape. Drag to orbit, scroll or pinch to zoom, click the ground to place your home."></canvas>
+<header class="bar">
+  <a class="brand" href="/">Maison <em>Rêve</em></a>
+  <div class="place"><b id="placeName">…</b><span id="placeSub"></span></div>
+  <div class="actions">
+    <button class="pill" id="photoBtn" title="See a photographic render of this design">Photo render</button>
+    <button class="pill" id="shareBtn">Share</button>
+    <button class="pill" id="savedBtn">Saved <span id="savedCount">0</span></button>
+    <button class="pill gold" id="saveBtn">Save</button>
+  </div>
 </header>
-<main id="app"></main>
-<aside id="drawer" class="drawer" aria-hidden="true"></aside>
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<aside class="panel left" id="landPanel" aria-label="Landscapes">
+  <div class="phead"><h2>Landscapes</h2><button class="x" data-sheetclose aria-label="Close">✕</button></div>
+  <div class="chips" id="landCats"></div>
+  <div class="plist" id="landList"></div>
+</aside>
+
+<aside class="panel right" id="homePanel" aria-label="Your home">
+  <div class="phead"><h2>Your home</h2><button class="x" data-sheetclose aria-label="Close">✕</button></div>
+  <div class="pscroll">
+    <h3 class="sec-title">Architecture</h3><div class="sgrid" id="styleGrid"></div>
+    <h3 class="sec-title">Layout</h3><div class="segs four" id="layoutRow"></div>
+    <h3 class="sec-title">Size</h3><div class="segs four" id="sizeRow"></div>
+    <h3 class="sec-title">Orientation <span id="rotVal">0°</span></h3>
+    <div class="rotrow"><button class="rb" id="rotL" aria-label="Rotate left">⟲</button><input type="range" id="rot" min="0" max="359" step="1" value="0" aria-label="Rotation"><button class="rb" id="rotR" aria-label="Rotate right">⟳</button></div>
+    <h3 class="sec-title">Light</h3><div class="segs three" id="timeRow"></div>
+    <div class="summary"><div><b id="sumTitle"></b><small id="sumMeta"></small></div><div class="price"><small>Estimate</small><b id="sumPrice"></b></div></div>
+    <button class="pill quiet" id="qBtn"></button>
+  </div>
+</aside>
+
+<p class="hint" id="hint"><span>Drag to orbit · Scroll to zoom · Click the ground to place your home · R rotates</span></p>
+<p class="line" id="placeLine"></p>
+<nav class="tabs" aria-label="Panels"><button data-tab="land">Landscapes</button><button data-tab="home">Home</button></nav>
+
+<aside class="drawer" id="savedDrawer" aria-label="Saved homes">
+  <div class="phead"><h2>Saved homes</h2><button class="x" id="savedClose" aria-label="Close">✕</button></div>
+  <div id="savedList" class="svlist"></div>
+  <button class="pill gold wide" id="cmpBtn" disabled>Pick 2–3 to compare</button>
+</aside>
+<div class="modal" id="cmpModal"><div class="mbox"><div class="phead"><h2>Compare</h2><button class="x" id="cmpClose" aria-label="Close">✕</button></div><div class="cmpgrid" id="cmpGrid"></div></div></div>
+
+<div class="fade" id="fade"><div><small>Teleporting to</small><h1 id="fadeTitle"></h1><p id="fadeSub"></p></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="/data.js"></script>
-<script src="/app.js"></script>
+<script type="module" src="/3d/main.js"></script>
 </body>
 </html>

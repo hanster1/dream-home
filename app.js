@@ -165,7 +165,7 @@
     }
     else if ('save' in ds) { const l = loadSaved(); l.unshift(design()); storeSaved(l.slice(0, 24)); b.textContent = 'Saved ✓'; b.disabled = true; toast('Saved to your homes'); }
     else if ('share' in ds) {
-      const url = location.origin + '/#' + new URLSearchParams(design()).toString();
+      const url = location.origin + '/photo.html#' + new URLSearchParams(design()).toString();
       try { if (navigator.share && matchMedia('(pointer:coarse)').matches) await navigator.share({ title: title(design()), url }); else { await navigator.clipboard.writeText(url); toast('Link copied'); } }
       catch { prompt('Copy this link', url); }
     }
