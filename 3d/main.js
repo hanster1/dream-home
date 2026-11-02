@@ -8,6 +8,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { World } from './world.js';
 import { LANDS, TIMES, CAT_ORDER, CAT_NAMES, heroView } from './lands.js';
 import { buildHome, setNight, materials } from './home.js';
+import { initRender } from './render.js';
 
 const DH = window.DH, $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const params = new URLSearchParams(location.search);
@@ -279,6 +280,11 @@ function boot() {
   addEventListener('keydown', e => { if (e.target.closest('input,textarea')) return; if (e.key === 'r' || e.key === 'R') spin(e.shiftKey ? -15 : 15); if (e.key === 'Escape') { $('#savedDrawer').classList.remove('on'); $('#cmpModal').classList.remove('on'); } });
   addEventListener('hashchange', () => { const h = readHash(); if (h.setting && h.setting !== st.setting) { Object.assign(st, h); loadLand(st.setting, h.x != null, h.time); } });
   document.body.classList.add('ready'); setTimeout(() => $('#hint')?.classList.add('gone'), 9000);
+  initRender({
+    capture: () => { const o = ring.material.opacity; ring.material.opacity = 0; render(); ring.material.opacity = o; return canvas; },
+    meta: () => { const L = LANDS[st.setting], S = DH.STYLES.find(s => s.id === st.style) || {}, Y = DH.LAYOUTS.find(l => l.id === st.layout) || {}, Z = DH.SIZES.find(z => z.id === st.size) || {};
+      return { land: L.name, inspired: L.inspired, landLine: L.line, style: S.name || st.style, styleLine: S.line, layout: Y.name || st.layout, size: `${Z.name || st.size} (${(Z.sqft || 0).toLocaleString()} sq ft)`, time: (TIMES[st.time]?.name || st.time) + ' light' }; },
+  });
   loop();
   window.__dh = { pause: () => { paused = true; }, step: (n = 1) => { for (let i = 0; i < n; i++) loop(); }, st, world, camera, controls, frames: () => frames, teleport, rebuildHome, save, hashOf };
 }

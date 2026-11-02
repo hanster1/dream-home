@@ -1,0 +1,1 @@
+{ "name": "dream-home", "private": true, "type": "module", "engines": { "node": "22.x" }, "dependencies": { "ai": "^7.0.0" } }
